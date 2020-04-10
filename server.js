@@ -1,6 +1,9 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
+
 app.use(express.json());
+app.use(cors());
 
 const database =  {
 	user:[
@@ -23,7 +26,6 @@ const database =  {
 	]
 }
 
-
 app.get('/', (req, res) => {
 	res.json(database.user);
 })
@@ -31,7 +33,7 @@ app.get('/', (req, res) => {
 app.post('/signin', (req, res) => {
 	if(req.body.email === database.user[0].email &&
 		req.body.password === database.user[0].password) {
-	  res.json('success');
+	  res.json(database.user[0]);
 	} else {
 	  res.status(404).json('error logging in');
 	}	
@@ -77,13 +79,3 @@ app.listen(3000, () => {
 	console.log('app is running on port 3000');
 })
 
-/*
-planning your endppoints - request, response
-/ --> res = this is working
-/signin --> POST = success/fail
-/register --> POST = user
-/profile/:userId --> GET = user
-/image --> PUT --> user
-
-
-*/
